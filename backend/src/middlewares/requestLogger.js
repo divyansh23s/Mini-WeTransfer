@@ -1,5 +1,14 @@
-
+const { randomUUID } = require('crypto');
 const logger = require('../config/logger');
+
+function safePathForLog(path, method) {
+  if (path.startsWith('/api/links/')) {
+    const parts = path.split('/');
+    if (parts.length === 4 && method === 'GET') return '/api/links/:token';
+    if (parts.length === 4 && method === 'DELETE') return '/api/links/:linkId';
+  }
+  return path;
+}
 
 function requestLogger(req, res, next) {
   const requestId = randomUUID();
@@ -22,3 +31,4 @@ function requestLogger(req, res, next) {
 }
 
 module.exports = requestLogger;
+module.exports.safePathForLog = safePathForLog;
