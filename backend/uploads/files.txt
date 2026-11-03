@@ -1,0 +1,1 @@
+the file which you want to upload will be inside the uploads.
